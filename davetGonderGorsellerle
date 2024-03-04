@@ -1,0 +1,37 @@
+function davetGonderGorsellerle() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName('Sayfa1'); // Sayfa adınızı buraya yazın
+  var dataRange = sheet.getRange('A1:A'); // A sütunundaki verilerin olduğu aralığı seçin
+  var data = dataRange.getValues();
+  var konu = '🍪 Davet: KVKK, Çerez ve Consent Mode Etkinliği - 4 Mart, Han Spaces - Levent';
+  var icerik = 'Katılımınız onaylanmıştır, 4 Mart 18:00 - 21:00 arası Han Space Levent’de görüşmek üzere. 🎉🎈<br><br>' +
+               'KVKK, Çerez, Consent Mode ve bunların ölçümü hakkında derinlemesine bir tartışma için sizleri etkinliğimize davet etmekten mutluluk duyuyoruz. Bu etkinlik, dijital dünyada gizlilik ve veri koruma konularında bilgi sahibi olmak isteyen herkes için faydalı olacaktır. 📊🔐<br><br>' +
+               '<b>Etkinlik Detayları:</b><br>' +
+               '- Tarih: 4 Mart 2024<br>' +
+               '- Saat: 18:00 - 21:00<br>' +
+               '- Lokasyon: Han Spaces - Levent<br>' +
+               '- Nisbetiye Cd No:24, 34340 Beşiktaş/İstanbul<br><br>' +
+               'Etkinlik hakkında daha fazla bilgi için bize ulaşmaktan çekinmeyin. 📧<br><br>Sevgiler. ❤️<br><br>' +
+               '<img src="https://goanalytix.io/static/extras/signature.jpg" alt="İmza" style="width: 450px;">'; // Görsel imza ekleyin
+
+  // Dosyaları Drive'dan yükle
+  var takvimDosyasi = DriveApp.getFileById('1SfLr8uSEFeWqUvn8huJ2d50yWMPeDO-9').getBlob();
+  var gorsel1 = DriveApp.getFileById('1_dCoTIjcme2bVYYFuOxQ4QaZImxzIQRz').getBlob();
+  var gorsel2 = DriveApp.getFileById('14Hj-wKmT6uXBY4V8x-TP0JJ1G9Y70ojp').getBlob();
+  var gorsel3 = DriveApp.getFileById('1DlNxCT1Lde_IjsZNvRC4XosIBVkn5c9Z').getBlob();
+
+  // E-posta gönderme döngüsü
+  for (var i = 0; i < data.length; i++) {
+    var emailAddress = data[i][0];
+    if (emailAddress != "") {
+      MailApp.sendEmail({
+        to: emailAddress,
+        name: "3GEN DGA",
+        subject: konu,
+        htmlBody: icerik,
+        attachments: [takvimDosyasi, gorsel1, gorsel2, gorsel3] // Eklentileri ekleyin
+      });
+      Logger.log('Mail gönderildi: ' + emailAddress);
+    }
+  }
+}
